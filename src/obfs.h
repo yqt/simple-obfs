@@ -40,6 +40,7 @@ typedef struct obfs_para {
     const char *name;
     const char *host;
     uint16_t port;
+    uint16_t dst_port;
 
     int(*const obfs_request)(buffer_t *, size_t, obfs_t *);
     int(*const obfs_response)(buffer_t *, size_t, obfs_t *);

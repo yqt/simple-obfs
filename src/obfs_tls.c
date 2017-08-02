@@ -177,6 +177,8 @@ static int is_enable_tls(obfs_t *obfs);
 static obfs_para_t obfs_tls_st = {
     .name            = "tls",
     .port            = 443,
+    .send_empty_response_upon_connection = false,
+
     .obfs_request    = &obfs_tls_request,
     .obfs_response   = &obfs_tls_response,
     .deobfs_request  = &deobfs_tls_request,
@@ -228,6 +230,9 @@ deobfs_app_data(buffer_t *buf, size_t idx, obfs_t *obfs)
             }
             continue;
         }
+
+        if (frame->len > 16384)
+            return OBFS_ERROR;
 
         int left_len = buf->len - bidx;
 

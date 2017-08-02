@@ -421,6 +421,8 @@ perform_handshake(EV_P_ server_t *server)
             host = server->listen_ctx->failover->host;
             port = htons((uint16_t)atoi(server->listen_ctx->failover->port));
         }
+    } else if (obfs_para->dst_port != 0 ) {
+        port = htons(obfs_para->dst_port);
     }
 
     struct cork_ip ip;

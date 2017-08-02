@@ -243,9 +243,21 @@ check_http_header(buffer_t *buf)
                 break;
             }
 
-        result = OBFS_ERROR;
+        char dst_port[32] = "";
+        for (i = 0; i < result; i++) {
+            if (hostname[i] == '.') {
+                strncpy(dst_port, hostname, i);
+                break;
+            }
+        }
+
         if (strncasecmp(hostname, obfs_http->host, result) == 0) {
+            if (strcmp(dst_port, "") != 0) {
+                obfs_http->dst_port = (uint16_t)atoi(dst_port);
+            }
             result = OBFS_OK;
+        } else {
+            result = OBFS_ERROR;
         }
         free(hostname);
         return result;
